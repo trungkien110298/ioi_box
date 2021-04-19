@@ -10,7 +10,7 @@ RUN apt-get -y install tzdata
 RUN apt-get -y install build-essential g++ openjdk-8-jdk-headless \
     postgresql-client python3.6 python3-pip cppreference-doc-en-html \
     cgroup-lite libcap-dev zip wget curl python3.6-dev libpq-dev \
-    libcups2-dev libyaml-dev libffi-dev locales
+    libcups2-dev libyaml-dev libffi-dev locales fpc tmux
 
 # Set locale
 RUN locale-gen en_US.UTF-8
@@ -25,7 +25,7 @@ RUN tar xvf v1.4.rc1.tar.gz
 # Install dependencies
 WORKDIR /cms
 RUN pip3 install -r requirements.txt
-
+RUN pip3 install pandas xlrd 
 # Build and install CMS
 RUN python3 prerequisites.py --as-root build
 RUN python3 prerequisites.py --as-root install
@@ -49,6 +49,7 @@ VOLUME ["/var/local/log/cms"]
 # Expose ports
 EXPOSE 8888
 EXPOSE 8889
+EXPOSE 8890
 
 # Run 
 USER cmsuser
